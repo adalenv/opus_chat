@@ -1,0 +1,17 @@
+DROP TABLE IF EXISTS `chat`;
+CREATE TABLE `chat` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `from` varchar(255) NOT NULL DEFAULT '',
+  `to` varchar(255) NOT NULL DEFAULT '',
+  `message` text NOT NULL,
+  `sent` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `recd` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS `chat_lastactivity`;
+CREATE TABLE `chat_lastactivity` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user` varchar(255) NOT NULL,
+  `time` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
