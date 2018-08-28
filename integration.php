@@ -2,7 +2,7 @@
 /*
 	Set the name of the session that your app uses to save the current logged on user id.
 */
-define('SESSION', 'userid');
+define('SESSION', $_SESSION['user_id']);
 
 /* Functions */
 
