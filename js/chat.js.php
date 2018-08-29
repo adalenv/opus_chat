@@ -1,4 +1,8 @@
 <?php
+if(session_id() == ''){
+    session_start();
+}
+
 header("Content-type: text/javascript");
 require_once '../common.php';
 chdir("../");
@@ -180,7 +184,7 @@ function chatHeartbeat(){
 	}
 	
 	$.ajax({
-	  url: "<?php base(); ?>chat.php?action=chatheartbeat",
+	  url: "<?php base(); ?>chat.php?action=chatheartbeat&me=<?=$_GET['me']; ?>",
 	  cache: false,
 	  dataType: "json",
 	  success: function(data) {
@@ -238,7 +242,7 @@ function closeChatBox(chatboxtitle) {
 	$('#chatbox_'+chatboxtitle).css('display','none');
 	restructureChatBoxes();
 
-	$.post("<?php base(); ?>chat.php?action=closechat", { chatbox: chatboxtitle} , function(data){	
+	$.post("<?php base(); ?>chat.php?action=closechat&me=<?=$_GET['me']; ?>", { chatbox: chatboxtitle} , function(data){	
 	});
 
 }
@@ -293,7 +297,7 @@ function checkChatBoxInputKey(event,chatboxtextarea,chatboxtitle) {
 		$(chatboxtextarea).focus();
 		$(chatboxtextarea).css('height','20px');
 		if (message != '') {
-			$.post("<?php base(); ?>chat.php?action=sendchat", {to: chatboxtitle, message: message} , function(data){
+			$.post("<?php base(); ?>chat.php?action=sendchat&me=<?=$_GET['me']; ?>", {to: chatboxtitle, message: message} , function(data){
 				message = message.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\"/g,"&quot;");
 				$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage"><span class="chatboxmessagefrom"><?php echo $txt_me; ?>:&nbsp;&nbsp;</span><span class="chatboxmessagecontent">'+message+'</span></div>');
 				$("#chatbox_"+chatboxtitle+" .chatboxcontent").scrollTop($("#chatbox_"+chatboxtitle+" .chatboxcontent")[0].scrollHeight);
@@ -326,7 +330,7 @@ function checkChatBoxInputKey(event,chatboxtextarea,chatboxtitle) {
 //////////////////////////////////////////////
 function startChatSession(){  
 	$.ajax({
-	  url: "<?php base(); ?>chat.php?action=startchatsession",
+	  url: "<?php base(); ?>chat.php?action=startchatsession&me=<?=$_GET['me']; ?>",
 	  cache: false,
 	  dataType: "json",
 	  success: function(data) {

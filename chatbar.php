@@ -16,15 +16,16 @@ switch ($_GET['act']) {
 		chat_friends_list();
 		break;
 }
+print_r($_GET);
 
 function update_chat_bar() {
-	$count = sizeof(getonlinecontacts(getuserid()));
+	$count = sizeof(getcontacts($_GET['me']));
 	echo t('Chat').' ('.$count.')';
 	exit;
 }
 
 function chat_friends_list() {
-	$friends = getonlinecontacts(getuserid());
+	$friends = getcontacts($_GET['me']);
 	$count = sizeof($friends);
 	if($count) {
 		$result = null;

@@ -12,6 +12,12 @@
 
 	Change it only if you know exactly what you're doing.
 */
+if(session_id() == ''){
+    session_start();
+}
+
+$_SESSION['test']='test';
+
 function is_online($userid) {
 	$userid = mysql_real_escape_string(stripslashes($userid));
 	$qry = mysql_query("SELECT time FROM chat_lastactivity WHERE user='$userid' ORDER BY id DESC LIMIT 1");
@@ -31,8 +37,10 @@ function is_online($userid) {
 	Change it only if you know exactly what you're doing.
 */
 function getuserid() {
-	global $_SESSION;
-	return $_SESSION['user_id'];
+	global $GLOBALS;
+	//print_r($_COOKIE);
+	//print_r($_SESSION);
+	return $GLOBALS['me'];
 }
 
 /*
@@ -47,7 +55,6 @@ function getonlinecontacts($userid) {
 	foreach($friends as $friend) {
 		//if(is_online($friend)) {
 			$return[] = $friend;
-		//}
 	}
 	return $return;
 }

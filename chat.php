@@ -21,7 +21,7 @@ if (!isset($_SESSION['openChatBoxes'])) {
 //////////////////////////////////////////////
 function chatHeartbeat() {
 	
-	$sql = "select * from chat where (chat.to = '".mysql_real_escape_string(getuserid())."' AND recd = 0) order by id ASC";
+	$sql = "select * from chat where (chat.to = '".mysql_real_escape_string($_GET['me'])."' AND recd = 0) order by id ASC";
 	$query = mysql_query($sql);
 	$items = '';
 
@@ -99,7 +99,7 @@ EOD;
 	}
 }
 
-	$sql = "update chat set recd = 1 where chat.to = '".mysql_real_escape_string(getuserid())."' and recd = 0";
+	$sql = "update chat set recd = 1 where chat.to = '".mysql_real_escape_string($_GET['me'])."' and recd = 0";
 	$query = mysql_query($sql);
 
 	if ($items != '') {
@@ -144,7 +144,7 @@ function startChatSession() {
 header('Content-type: application/json');
 ?>
 {
-		"username": "<?php echo getuserid(); ?>",
+		"username": "<?php echo $_GET['me']; ?>",
 		"items": [
 			<?php echo $items;?>
         ]
@@ -157,7 +157,7 @@ header('Content-type: application/json');
 }
 //////////////////////////////////////////////
 function sendChat() {
-	$from = getuserid();
+	$from = $_GET['me'];
 	$to = $_POST['to'];
 	$message = $_POST['message'];
 	if(function_exists('hook_message_text') AND hook_message_text($message)!='') $message = hook_message_text($message);
@@ -170,7 +170,7 @@ function sendChat() {
 		$_SESSION['chatHistory'][$_POST['to']] = '';
 	}
 
-	$displayname = t('Me'); //get_display_name(getuserid());
+	$displayname = t('Me'); //get_display_name($_GET['me']);
 	$_SESSION['chatHistory'][$_POST['to']] .= <<<EOD
 					   {
 			"s": "1",

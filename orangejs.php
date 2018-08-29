@@ -26,11 +26,11 @@ if(jquery_included) {
 function load_javascripts() {
 	var chatjs = document.createElement('script');
 		chatjs.type = 'text/javascript';
-		chatjs.src = '<?php base(); ?>js/chat.js.php';
+		chatjs.src = '<?php base(); ?>js/chat.js.php?me=<?=$_GET['me']; ?>';
 		document.getElementsByTagName('head')[0].appendChild(chatjs);
 
 	var chatbarjs = document.createElement('script');
 		chatbarjs.type = 'text/javascript';
-		chatbarjs.src = '<?php base(); ?>js/chatbar.js.php';
+		chatbarjs.src = '<?php base(); ?>js/chatbar.js.php?me=<?=$_GET['me']; ?>';
 		document.getElementsByTagName('head')[0].appendChild(chatbarjs);	
 }
