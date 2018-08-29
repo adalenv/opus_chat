@@ -16,7 +16,6 @@ switch ($_GET['act']) {
 		chat_friends_list();
 		break;
 }
-print_r($_GET);
 
 function update_chat_bar() {
 	$count = sizeof(getcontacts($_GET['me']));
