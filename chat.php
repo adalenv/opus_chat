@@ -10,7 +10,7 @@ if ($_GET['action'] == "chatheartbeat") { chatHeartbeat(); }
 if ($_GET['action'] == "sendchat") { sendChat(); } 
 if ($_GET['action'] == "closechat") { closeChat(); } 
 if ($_GET['action'] == "startchatsession") { startChatSession(); } 
-
+if ($_GET['action'] == "openChat") { openChat(); } 
 if (!isset($_SESSION['chatHistory'])) {
 	$_SESSION['chatHistory'] = array();	
 }
@@ -204,4 +204,103 @@ function sanitize($text) {
 	$text = str_replace("\r\n","\n",$text);
 	$text = str_replace("\n","<br />",$text);
 	return $text;
+}
+
+
+function openChat() {
+	
+	$sql = "select * from chat where (chat.to = '".mysql_real_escape_string($_GET['me'])."' AND chat.from= '".mysql_real_escape_string($_GET['from'])."'  ) OR (chat.to = '".mysql_real_escape_string($_GET['from'])."' AND chat.from= '".mysql_real_escape_string($_GET['me'])."'  ) AND recd = 1  order by id ASC";
+	$query = mysql_query($sql);
+	$items = '';
+
+	$chatBoxes = array();
+
+	while ($chat = mysql_fetch_array($query)) {
+
+		if (!isset($_SESSION['openChatBoxes'][$chat['from']]) && isset($_SESSION['chatHistory'][$chat['from']])) {
+			$items = $_SESSION['chatHistory'][$chat['from']];
+		}
+
+		$chat['message'] = sanitize($chat['message']);
+		$chat['displayname'] = get_display_name($chat['from']);
+		$items .= <<<EOD
+					   {
+			"s": "0",
+			"f": "{$chat['from']}",
+			"d": "{$chat['displayname']}",
+			"m": "{$chat['message']}"
+	   },
+EOD;
+
+	if (!isset($_SESSION['chatHistory'][$chat['from']])) {
+		$_SESSION['chatHistory'][$chat['from']] = '';
+	}
+
+	$chat['displayname'] = get_display_name($chat['from']);
+	$_SESSION['chatHistory'][$chat['from']] .= <<<EOD
+						   {
+			"s": "0",
+			"f": "{$chat['from']}",
+			"d": "{$chat['displayname']}",
+			"m": "{$chat['message']}"
+	   },
+EOD;
+		
+		unset($_SESSION['tsChatBoxes'][$chat['from']]);
+		$_SESSION['openChatBoxes'][$chat['from']] = $chat['sent'];
+	}
+
+	if (!empty($_SESSION['openChatBoxes'])) {
+	foreach ($_SESSION['openChatBoxes'] as $chatbox => $time) {
+		if (!isset($_SESSION['tsChatBoxes'][$chatbox])) {
+			$now = time()-strtotime($time);
+			$time = date(TIMEFORMAT, strtotime($time));
+
+			$message = t('Sent at')." $time";
+			if ($now > 180) {
+				$displayname = get_display_name($chatbox);
+				$items .= <<<EOD
+{
+"s": "2",
+"f": "$chatbox",
+"d": "{$displayname}",
+"m": "{$message}"
+},
+EOD;
+
+	if (!isset($_SESSION['chatHistory'][$chatbox])) {
+		$_SESSION['chatHistory'][$chatbox] = '';
+	}
+
+	$displayname = get_display_name($chatbox);
+	$_SESSION['chatHistory'][$chatbox] .= <<<EOD
+		{
+"s": "2",
+"f": "$chatbox",
+"d": "{$displayname}",
+"m": "{$message}"
+},
+EOD;
+			$_SESSION['tsChatBoxes'][$chatbox] = 1;
+		}
+		}
+	}
+}
+
+	$sql = "update chat set recd = 1 where chat.to = '".mysql_real_escape_string($_GET['me'])."' and recd = 0";
+	$query = mysql_query($sql);
+
+	if ($items != '') {
+		$items = substr($items, 0, -1);
+	}
+header('Content-type: application/json');
+?>
+{
+		"items": [
+			<?php echo $items;?>
+        ]
+}
+
+<?php
+			exit(0);
 }
