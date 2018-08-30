@@ -219,6 +219,7 @@ function chatHeartbeat(){
 					newMessagesWin[chatboxtitle] = true;
 					newDisplay[chatboxtitle] = item.d;
 					$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage"><span class="chatboxmessagefrom">'+item.d+':&nbsp;&nbsp;</span><span class="chatboxmessagecontent">'+item.m+'</span></div>');
+					SaveDataToLocalStorage(item.f);
 				}
 
 				$("#chatbox_"+chatboxtitle+" .chatboxcontent").scrollTop($("#chatbox_"+chatboxtitle+" .chatboxcontent")[0].scrollHeight);
@@ -249,7 +250,7 @@ function closeChatBox(chatboxtitle) {
 
 	$.post("<?php base(); ?>chat.php?action=closechat&me=<?=$_GET['me']; ?>", { chatbox: chatboxtitle} , function(data){	
 	});
-
+	DeleteDataFromLocalStorage(chatboxtitle);
 }
 //////////////////////////////////////////////
 function toggleChatBoxGrowth(chatboxtitle) {
@@ -304,7 +305,7 @@ function checkChatBoxInputKey(event,chatboxtextarea,chatboxtitle) {
 		if (message != '') {
 			$.post("<?php base(); ?>chat.php?action=sendchat&me=<?=$_GET['me']; ?>", {to: chatboxtitle, message: message} , function(data){
 				message = message.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\"/g,"&quot;");
-				$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage"><span class="chatboxmessagefrom"><?php echo $txt_me; ?>:&nbsp;&nbsp;</span><span class="chatboxmessagecontent">'+message+'</span></div>');
+				$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage"><span style="float: right !important;" class="chatboxmessagecontent">'+message+'</span></div><br/>');
 				$("#chatbox_"+chatboxtitle+" .chatboxcontent").scrollTop($("#chatbox_"+chatboxtitle+" .chatboxcontent")[0].scrollHeight);
 			});
 		}
@@ -497,10 +498,12 @@ function openChat(from){
 				if (item.s == 2) {
 					$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage"><span class="chatboxinfo">'+item.m+'</span></div>');
 				} else {
-					//newMessages[chatboxtitle] = true;
-					//newMessagesWin[chatboxtitle] = true;
-					//newDisplay[chatboxtitle] = item.d;
-					$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage"><span class="chatboxmessagefrom">'+item.d+':&nbsp;&nbsp;</span><span class="chatboxmessagecontent">'+item.m+'</span></div>');
+					if(item.f!=from){
+						$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage"><!-- <span style="float:right !important" class="chatboxmessagefrom">:&nbsp;&nbsp;'+item.d+'</span> --><span style="float:right !important" class="chatboxmessagecontent">'+item.m+'</span></div><br/>');
+					} else {
+						$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage"><span class="chatboxmessagefrom">'+item.d+':&nbsp;&nbsp;</span><span class="chatboxmessagecontent">'+item.m+'</span></div>');
+					}
+					
 				}
 
 				$("#chatbox_"+chatboxtitle+" .chatboxcontent").scrollTop($("#chatbox_"+chatboxtitle+" .chatboxcontent")[0].scrollHeight);
@@ -523,5 +526,43 @@ function openChat(from){
 */
 		
 		//setTimeout('chatHeartbeat();',chatHeartbeatTime);
+
+		SaveDataToLocalStorage(from);
+
+			
 	}});
 }
+
+function SaveDataToLocalStorage(data)
+{
+	if (localStorage.getItem("openedChats") === null) {
+	  var a = [];
+	  localStorage.setItem('openedChats', JSON.stringify(a));
+	}
+    var a = [];
+    a = JSON.parse(localStorage.getItem('openedChats'));
+    if(!a.includes(data) && data!=null){
+    	a.push(data);
+    	localStorage.setItem('openedChats', JSON.stringify(a));
+	}
+}
+
+function DeleteDataFromLocalStorage(data){
+	var a=JSON.parse(localStorage.getItem("openedChats"));
+	for(i=0;i<a.length;i++){
+		if(a[i]==data){
+			a.splice(i,1);
+			localStorage.setItem('openedChats', JSON.stringify(a));
+		}
+	}
+}
+
+function OpenLastChats(){
+	if(localStorage.getItem("openedChats")==null){return;}
+	var chats=JSON.parse(localStorage.getItem("openedChats"));
+	for(i=0;i<chats.length;i++){
+		chatWith(chats[i],chats[i]);
+	}
+}
+
+OpenLastChats();

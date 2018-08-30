@@ -209,7 +209,7 @@ function sanitize($text) {
 
 function openChat() {
 	
-	$sql = "select * from chat where (chat.to = '".mysql_real_escape_string($_GET['me'])."' AND chat.from= '".mysql_real_escape_string($_GET['from'])."'  ) OR (chat.to = '".mysql_real_escape_string($_GET['from'])."' AND chat.from= '".mysql_real_escape_string($_GET['me'])."'  ) AND recd = 1  order by id ASC";
+	$sql = "select * from chat where (chat.to = '".mysql_real_escape_string($_GET['me'])."' AND chat.from= '".mysql_real_escape_string($_GET['from'])."'  ) OR (chat.to = '".mysql_real_escape_string($_GET['from'])."' AND chat.from= '".mysql_real_escape_string($_GET['me'])."'  ) AND recd = 1  order by id ASC ";
 	$query = mysql_query($sql);
 	$items = '';
 
@@ -257,32 +257,32 @@ EOD;
 			$time = date(TIMEFORMAT, strtotime($time));
 
 			$message = t('Sent at')." $time";
-			if ($now > 180) {
-				$displayname = get_display_name($chatbox);
-				$items .= <<<EOD
-{
-"s": "2",
-"f": "$chatbox",
-"d": "{$displayname}",
-"m": "{$message}"
-},
-EOD;
+// 			if ($now > 180) {
+// 				$displayname = get_display_name($chatbox);
+// 				$items .= <<<EOD
+// {
+// "s": "2",
+// "f": "$chatbox",
+// "d": "{$displayname}",
+// "m": "{$message}"
+// },
+// EOD;
 
-	if (!isset($_SESSION['chatHistory'][$chatbox])) {
-		$_SESSION['chatHistory'][$chatbox] = '';
-	}
+// 	if (!isset($_SESSION['chatHistory'][$chatbox])) {
+// 		$_SESSION['chatHistory'][$chatbox] = '';
+// 	}
 
-	$displayname = get_display_name($chatbox);
-	$_SESSION['chatHistory'][$chatbox] .= <<<EOD
-		{
-"s": "2",
-"f": "$chatbox",
-"d": "{$displayname}",
-"m": "{$message}"
-},
-EOD;
-			$_SESSION['tsChatBoxes'][$chatbox] = 1;
-		}
+// 	$displayname = get_display_name($chatbox);
+// 	$_SESSION['chatHistory'][$chatbox] .= <<<EOD
+// 		{
+// "s": "2",
+// "f": "$chatbox",
+// "d": "{$displayname}",
+// "m": "{$message}"
+// },
+// EOD;
+// 			$_SESSION['tsChatBoxes'][$chatbox] = 1;
+// 		}
 		}
 	}
 }
