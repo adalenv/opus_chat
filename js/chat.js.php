@@ -561,8 +561,19 @@ function OpenLastChats(){
 	if(localStorage.getItem("openedChats")==null){return;}
 	var chats=JSON.parse(localStorage.getItem("openedChats"));
 	for(i=0;i<chats.length;i++){
-		chatWith(chats[i],chats[i]);
+		chatWith(chats[i],GetUserFullName(chats[i]));
 	}
 }
 
+function GetUserFullName(id){
+	$.ajax({
+        type: "POST",
+        data: { id: id},
+         dataType: 'text',
+        url: "<?php base(); ?>chat.php?action=getName&",
+        success: function(data){
+			$("#chatbox_"+id+" .chatboxtitle").text(data);
+        }
+    });
+}
 OpenLastChats();

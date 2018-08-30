@@ -11,6 +11,7 @@ if ($_GET['action'] == "sendchat") { sendChat(); }
 if ($_GET['action'] == "closechat") { closeChat(); } 
 if ($_GET['action'] == "startchatsession") { startChatSession(); } 
 if ($_GET['action'] == "openChat") { openChat(); } 
+if ($_GET['action'] == "getName") { getName(); } 
 if (!isset($_SESSION['chatHistory'])) {
 	$_SESSION['chatHistory'] = array();	
 }
@@ -19,6 +20,15 @@ if (!isset($_SESSION['openChatBoxes'])) {
 	$_SESSION['openChatBoxes'] = array();	
 }
 //////////////////////////////////////////////
+function getName(){
+	$userid = mysql_real_escape_string(stripslashes($_POST['id']));
+	$qry = mysql_query("SELECT CONCAT_WS(' ',first_name,last_name) AS name FROM users WHERE user_id='".$userid."'");
+	if(mysql_num_rows($qry)) {
+		$fetch = mysql_fetch_array($qry);
+		echo $fetch['name'];
+	} else return null;
+}
+
 function chatHeartbeat() {
 	
 	$sql = "select * from chat where (chat.to = '".mysql_real_escape_string($_GET['me'])."' AND recd = 0) order by id ASC";
