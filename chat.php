@@ -1,5 +1,6 @@
 <?php
 require_once 'common.php';
+header('Access-Control-Allow-Origin: *');  
 
 global $dbh;
 $dbh = mysql_connect(DBPATH,DBUSER,DBPASS);

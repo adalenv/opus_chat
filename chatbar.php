@@ -1,6 +1,7 @@
 <?php
 
 require_once 'common.php';
+header('Access-Control-Allow-Origin: *');  
 
 mysql_connection();
 update_lastact();
@@ -28,12 +29,25 @@ function chat_friends_list() {
 	$count = sizeof($friends);
 	if($count) {
 		$result = null;
+		echo '<input class="filter_users" style="width:100%" placeholder="Search.." />';
 		foreach($friends as $friend) {
 			$result .= '<a href="#" onclick="javascript:chatWith(\''.$friend.'\', \''.get_display_name($friend).'\');hide_chat_list();return false;" class="chat_boxes" ><li class="chat_boxes">'.get_display_name($friend).'</li></a>';
 		}
 		// echo '<div class="sub chat_boxes">'.t('Chat').' ('.$count.')</div>';
-		echo '<ul  class="chat_boxes">'.$result.'</ul>';
+		echo '<ul id="f_users"  class="chat_boxes">'.$result.'</ul>';
 	} else {
 		echo t('No online users.');
 	}
+	?>
+<script type="text/javascript">
+	$(document).ready(function(){
+	  $(".filter_users").on("keyup", function() {
+	    var value = $(this).val().toLowerCase();
+	    $("#f_users a li").filter(function() {
+	      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+	    });
+	  });
+	});
+</script>
+	<?php
 }

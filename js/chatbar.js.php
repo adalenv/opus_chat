@@ -2,6 +2,7 @@
 header("Content-type: text/javascript");
 require_once '../common.php';
 chdir("../");
+header('Access-Control-Allow-Origin: *');  
 
 if(file_exists('themes/'.THEME.'/loading.gif'))
 	$loading = ORANGE_BASE.'themes/'.THEME.'/loading.gif';
@@ -39,7 +40,7 @@ $(document).ready(function($) {
 		show_chat_list();
 	});
 	$(document).click(function(event) {
-		if ( !$(event.target).hasClass("chat_boxes")) {
+		if ( !$(event.target).hasClass("chat_boxes") && !$(event.target).hasClass("filter_users") ) {
 			 hide_chat_list();
 		}
 	});
