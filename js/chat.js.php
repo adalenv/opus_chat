@@ -218,7 +218,8 @@ function chatHeartbeat(){
 					newMessages[chatboxtitle] = true;
 					newMessagesWin[chatboxtitle] = true;
 					newDisplay[chatboxtitle] = item.d;
-					$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage"><span class="chatboxmessagefrom">'+item.d+':&nbsp;&nbsp;</span><span class="chatboxmessagecontent">'+item.m+'</span></div>');
+					//$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage"><span class="chatboxmessagefrom">'+item.d+':&nbsp;&nbsp;</span><span class="chatboxmessagecontent">'+item.m+'</span></div>');
+					$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage recived" ><!-- <span class="chatboxmessagefrom">'+item.d+':&nbsp;&nbsp;</span> --><span class="chatboxmessagecontent">'+item.m+'</span></div>');
 					SaveDataToLocalStorage(item.f);
 				}
 
@@ -305,7 +306,8 @@ function checkChatBoxInputKey(event,chatboxtextarea,chatboxtitle) {
 		if (message != '') {
 			$.post("<?php base(); ?>chat.php?action=sendchat&me=<?=$_GET['me']; ?>", {to: chatboxtitle, message: message} , function(data){
 				message = message.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\"/g,"&quot;");
-				$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage"><span style="float: right !important;" class="chatboxmessagecontent">'+message+'</span></div><br/>');
+				//$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage"><span style="float: right !important;" class="chatboxmessagecontent">'+message+'</span></div><br/>');
+				$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage sent"><span  class="chatboxmessagecontent">'+message+'</span></div>');
 				$("#chatbox_"+chatboxtitle+" .chatboxcontent").scrollTop($("#chatbox_"+chatboxtitle+" .chatboxcontent")[0].scrollHeight);
 			});
 		}
@@ -499,9 +501,9 @@ function openChat(from){
 					$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage"><span class="chatboxinfo">'+item.m+'</span></div>');
 				} else {
 					if(item.f!=from){
-						$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage"><!-- <span style="float:right !important" class="chatboxmessagefrom">:&nbsp;&nbsp;'+item.d+'</span> --><span style="float:right !important" class="chatboxmessagecontent">'+item.m+'</span></div><br/>');
+						$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage sent"><!-- <span style="float:right !important" class="chatboxmessagefrom">:&nbsp;&nbsp;'+item.d+'</span> --><span  class="chatboxmessagecontent">'+item.m+'</span><!-- <div class="timestamp">sent</div> --></div>');
 					} else {
-						$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage"><span class="chatboxmessagefrom">'+item.d+':&nbsp;&nbsp;</span><span class="chatboxmessagecontent">'+item.m+'</span></div>');
+						$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage recived" ><!-- <span class="chatboxmessagefrom">'+item.d+':&nbsp;&nbsp;</span> --><span class="chatboxmessagecontent">'+item.m+'</span><!-- <div class="timestamp">recived</div> --></div>');
 					}
 					
 				}

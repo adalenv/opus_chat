@@ -29,7 +29,7 @@ function chat_friends_list() {
 	$count = sizeof($friends);
 	if($count) {
 		$result = null;
-		echo '<input class="filter_users" style="width:100%" placeholder="Search.." />';
+		echo '<input class="filter_users" style="width:100%" placeholder="Search..." />';
 		foreach($friends as $friend) {
 			$result .= '<a href="#" onclick="javascript:chatWith(\''.$friend.'\', \''.get_display_name($friend).'\');hide_chat_list();return false;" class="chat_boxes" ><li class="chat_boxes">'.get_display_name($friend).'</li></a>';
 		}
@@ -49,5 +49,16 @@ function chat_friends_list() {
 	  });
 	});
 </script>
+<style>
+	.filter_users{
+		border: 0;
+	    float: none;
+	    box-shadow: none;
+	    border-radius: 0;
+	    padding: 6px;
+    	margin: 0px;
+    	border-bottom: 1px #14b9ce1f solid;
+	}
+</style>
 	<?php
 }

@@ -105,7 +105,8 @@
 }
 
 .chatboxmessage {
-	margin-left:1em;
+	/*margin-left:1em;*/
+	/*width: 100%*/
 }
 
 .chatboxinfo {
@@ -150,4 +151,47 @@
 
 #chat_friends_list a {
 	text-decoration: none;
+}
+
+.recived{
+	clear: both;
+    float: left;
+    padding: 6px 10px 7px;
+    border-radius: 20px 20px 20px 0;
+    background: #eee;
+    margin: 5px 0;
+    font-size: 14px;
+    line-height: 1.4;
+    /*margin-left: 35px;*/
+    position: relative;
+    border: 1px solid #ccc;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+}
+
+.sent{
+	clear: both;
+    padding: 6px 10px 7px;
+    border-radius: 20px 20px 20px 0;
+    background: #eee;
+    margin: 5px 0;
+    font-size: 14px;
+    /*line-height: 1.4;*/
+    margin-left: 35px;
+    position: relative;
+    border: 1px solid #ccc;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+    float: right;
+    text-align: right;
+    background: linear-gradient(120deg, #ddd, #eee);
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 20px 20px 0 20px;
+}
+.timestamp {
+    position: absolute;
+    bottom: -15px;
+    font-size: 10px;
+    color: #555;
+    right: 30px;
+    color: rgba(255, 255, 255, .7);
 }
