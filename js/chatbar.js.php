@@ -13,7 +13,7 @@ else
 function show_chat_list() {
 	$("#chat_list").show();
 	$("#chat_friends_list").html("<img  src=\'<?php echo $loading; ?>\' width=16 height=16 />");
-	$("#chat_friends_list").load("<?php base(); ?>chatbar.php?act=chat_friends_list&me=<?=$_GET['me']; ?>");
+	$("#chat_friends_list").load("<?php base(); ?>chatbar.php?act=chat_friends_list&me=<?=$_GET['me'];?>&role=<?=$_GET['role'];?>");
 	$("#chat_bar").removeClass("chat_bar");
 	$("#chat_bar").addClass("chat_bar_active");
 }
@@ -23,7 +23,7 @@ function hide_chat_list() {
 	$("#chat_bar").addClass("chat_bar");
 }
 function update_chat_bar() {
-	$("#chat_bar_content").load("<?php base(); ?>chatbar.php?act=update_chat_bar&me=<?=$_GET['me']; ?>");
+	$("#chat_bar_content").load("<?php base(); ?>chatbar.php?act=update_chat_bar&me=<?=$_GET['me'];?>&role=<?=$_GET['role'];?>");
 }
 $(document).ready(function($) {
 	$("body").append('<div id="chat_list" class="chat_boxes"> \

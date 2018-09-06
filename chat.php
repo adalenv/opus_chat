@@ -51,7 +51,8 @@ function chatHeartbeat() {
 			"s": "0",
 			"f": "{$chat['from']}",
 			"d": "{$chat['displayname']}",
-			"m": "{$chat['message']}"
+			"m": "{$chat['message']}",
+			"t": "{$chat['sent']}"
 	   },
 EOD;
 
@@ -65,7 +66,8 @@ EOD;
 			"s": "0",
 			"f": "{$chat['from']}",
 			"d": "{$chat['displayname']}",
-			"m": "{$chat['message']}"
+			"m": "{$chat['message']}",
+			"t": "{$chat['sent']}"
 	   },
 EOD;
 		
@@ -80,32 +82,32 @@ EOD;
 			$time = date(TIMEFORMAT, strtotime($time));
 
 			$message = t('Sent at')." $time";
-			if ($now > 180) {
-				$displayname = get_display_name($chatbox);
-				$items .= <<<EOD
-{
-"s": "2",
-"f": "$chatbox",
-"d": "{$displayname}",
-"m": "{$message}"
-},
-EOD;
+// 			if ($now > 180) {
+// 				$displayname = get_display_name($chatbox);
+// 				$items .= <<<EOD
+// {
+// "s": "2",
+// "f": "$chatbox",
+// "d": "{$displayname}",
+// "m": "{$message}"
+// },
+// EOD;
 
-	if (!isset($_SESSION['chatHistory'][$chatbox])) {
-		$_SESSION['chatHistory'][$chatbox] = '';
-	}
+// 	if (!isset($_SESSION['chatHistory'][$chatbox])) {
+// 		$_SESSION['chatHistory'][$chatbox] = '';
+// 	}
 
-	$displayname = get_display_name($chatbox);
-	$_SESSION['chatHistory'][$chatbox] .= <<<EOD
-		{
-"s": "2",
-"f": "$chatbox",
-"d": "{$displayname}",
-"m": "{$message}"
-},
-EOD;
-			$_SESSION['tsChatBoxes'][$chatbox] = 1;
-		}
+// 	$displayname = get_display_name($chatbox);
+// 	$_SESSION['chatHistory'][$chatbox] .= <<<EOD
+// 		{
+// "s": "2",
+// "f": "$chatbox",
+// "d": "{$displayname}",
+// "m": "{$message}"
+// },
+// EOD;
+// 			$_SESSION['tsChatBoxes'][$chatbox] = 1;
+// 		}
 		}
 	}
 }
@@ -239,7 +241,8 @@ function openChat() {
 			"s": "0",
 			"f": "{$chat['from']}",
 			"d": "{$chat['displayname']}",
-			"m": "{$chat['message']}"
+			"m": "{$chat['message']}",
+			"t": "{$chat['sent']}"
 	   },
 EOD;
 
@@ -253,7 +256,8 @@ EOD;
 			"s": "0",
 			"f": "{$chat['from']}",
 			"d": "{$chat['displayname']}",
-			"m": "{$chat['message']}"
+			"m": "{$chat['message']}",
+			"t": "{$chat['sent']}"
 	   },
 EOD;
 		

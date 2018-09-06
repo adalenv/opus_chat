@@ -10,29 +10,39 @@ require_once 'config.inc.php';
 
 
 
-function getcontacts($userid) {
-	$userid = mysql_real_escape_string(stripslashes($_GET['me']));
-	$qry = mysql_query("SELECT user_id from users where user_id!='".$userid."' ");
+function getcontacts($userid,$role) {
+	$userid = mysql_real_escape_string(stripslashes($userid));
+	switch ($role) {
+		case "backoffice":
+			$qry = mysql_query("SELECT user_id from users where user_id!='".$userid."' and (role='supervisor' or role='operator' or role='admin')  order by role desc");
+			break;
+		case "supervisor":
+			$qry = mysql_query("SELECT user_id from users where user_id!='".$userid."' and role='backoffice' ");
+			break;
+		case "operator":
+			$qry = mysql_query("SELECT user_id from users where user_id!='".$userid."' and role='backoffice' ");
+			break;
+		case "admin":
+			$qry = mysql_query("SELECT user_id from users where user_id!='".$userid."' and role='backoffice' ");
+			break;
+	}
 	$users = array();
 	if(mysql_num_rows($qry)) {
 		while($row = mysql_fetch_array($qry)) {
 			$users[] = $row['user_id'];
 		}
 	}
-	//print_r($users);
 	return $users;
 }
 
-
 function get_display_name($userid) {
 	$userid = mysql_real_escape_string(stripslashes($userid));
-	$qry = mysql_query("SELECT CONCAT_WS(' ',first_name,last_name) AS name FROM users WHERE user_id='".$userid."'");
+	$qry = mysql_query("SELECT CONCAT_WS(' ',first_name,last_name,'<span style=\'color:#11b8cc;font-size:smaller;float:right;\' >',role,'</span>') AS name FROM users WHERE user_id='".$userid."'");
 	if(mysql_num_rows($qry)) {
 		$fetch = mysql_fetch_array($qry);
 		return $fetch['name'];
 	} else return null;
 }
-
 
 function base() {
 	echo ORANGE_BASE;

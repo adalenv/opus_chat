@@ -19,19 +19,20 @@ switch ($_GET['act']) {
 }
 
 function update_chat_bar() {
-	$count = sizeof(getcontacts($_GET['me']));
+	$count = sizeof(getcontacts($_GET['me'],$_GET['role']));
 	echo t('Chat').' ('.$count.')';
 	exit;
 }
 
 function chat_friends_list() {
-	$friends = getcontacts($_GET['me']);
+	$friends = getcontacts($_GET['me'],$_GET['role']);
 	$count = sizeof($friends);
 	if($count) {
 		$result = null;
 		echo '<input class="filter_users" style="width:100%" placeholder="Search..." />';
 		foreach($friends as $friend) {
-			$result .= '<a href="#" onclick="javascript:chatWith(\''.$friend.'\', \''.get_display_name($friend).'\');hide_chat_list();return false;" class="chat_boxes" ><li class="chat_boxes">'.get_display_name($friend).'</li></a>';
+			$n=explode(' ',get_display_name($friend));
+			$result .= '<a href="#" onclick="javascript:chatWith(\''.$friend.'\', \''.$n[0].' '.$n[1].'\');hide_chat_list();return false;" class="chat_boxes" ><li class="chat_boxes">'.get_display_name($friend).'</li></a>';
 		}
 		// echo '<div class="sub chat_boxes">'.t('Chat').' ('.$count.')</div>';
 		echo '<ul id="f_users"  class="chat_boxes">'.$result.'</ul>';

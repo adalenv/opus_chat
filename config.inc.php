@@ -3,8 +3,8 @@
 /* MySQL data */
 define ('DBPATH','localhost');
 define ('DBUSER','root');
-define ('DBPASS','admini');
-define ('DBNAME','opusdb');
+define ('DBPASS','AdminI2012');
+define ('DBNAME','opus');
 header('Access-Control-Allow-Origin: *');
 /* Path to orangechat folder (relative to server root) */
 $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";

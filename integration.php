@@ -14,16 +14,25 @@
 	logged on users that are friends with $userid (or not, if you don't want).
 	An empty array (0 values) must be returned if no users are online.
 */
-function getcontacts($userid) {
-	$userid = mysql_real_escape_string(stripslashes(getuserid()));
-	$qry = mysql_query("SELECT user_id from users where user_id!='".$userid."' ");
+function getcontacts($userid,$role) {
+	$userid = mysql_real_escape_string(stripslashes($userid));
+	switch ($role) {
+		case "backoffice":
+			$qry = mysql_query("SELECT user_id from users where user_id!='".$userid."' and role='supervisor' ");
+			break;
+		case "supervisor":
+			$qry = mysql_query("SELECT user_id from users where user_id!='".$userid."' and (role='backoffice' or role='operator') ");
+			break;
+		case "operator":
+			$qry = mysql_query("SELECT user_id from users where user_id!='".$userid."' and role='supervisor' ");
+			break;
+	}
 	$users = array();
 	if(mysql_num_rows($qry)) {
 		while($row = mysql_fetch_array($qry)) {
 			$users[] = $row['user_id'];
 		}
 	}
-	//print_r($users);
 	return $users;
 }
 
