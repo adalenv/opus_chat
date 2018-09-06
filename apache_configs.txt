@@ -10,7 +10,7 @@ sites-enabled/chat-default.conf
         #ServerName www.example.com
 
         ServerAdmin webmaster@localhost
-        DocumentRoot /var/www/chat
+        DocumentRoot /var/www/opus_chat
 
         # Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
         # error, crit, alert, emerg.
