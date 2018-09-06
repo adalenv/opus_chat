@@ -45,7 +45,9 @@ function chatHeartbeat() {
 		}
 
 		$chat['message'] = sanitize($chat['message']);
-		$chat['displayname'] = get_display_name($chat['from']);
+		//$chat['displayname'] = get_display_name($chat['from']);
+		$n=explode(' ',get_display_name($chat['from']));
+		$chat['displayname'] =$n[0].' '.$n[1];
 		$items .= <<<EOD
 					   {
 			"s": "0",
@@ -60,7 +62,9 @@ EOD;
 		$_SESSION['chatHistory'][$chat['from']] = '';
 	}
 
-	$chat['displayname'] = get_display_name($chat['from']);
+	//$chat['displayname'] = get_display_name($chat['from']);
+	$n=explode(' ',get_display_name($chat['from']));
+	$chat['displayname'] =$n[0].' '.$n[1];
 	$_SESSION['chatHistory'][$chat['from']] .= <<<EOD
 						   {
 			"s": "0",
@@ -235,7 +239,9 @@ function openChat() {
 		}
 
 		$chat['message'] = sanitize($chat['message']);
-		$chat['displayname'] = get_display_name($chat['from']);
+		//$chat['displayname'] = get_display_name($chat['from']);
+		$n=explode(' ',get_display_name($chat['from']));
+		$chat['displayname'] =$n[0].' '.$n[1];
 		$items .= <<<EOD
 					   {
 			"s": "0",
@@ -250,7 +256,9 @@ EOD;
 		$_SESSION['chatHistory'][$chat['from']] = '';
 	}
 
-	$chat['displayname'] = get_display_name($chat['from']);
+	//$chat['displayname'] = get_display_name($chat['from']);
+	$n=explode(' ',get_display_name($chat['from']));
+	$chat['displayname'] =$n[0].' '.$n[1];
 	$_SESSION['chatHistory'][$chat['from']] .= <<<EOD
 						   {
 			"s": "0",
