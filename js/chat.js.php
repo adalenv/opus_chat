@@ -221,6 +221,7 @@ function chatHeartbeat(){
 					//$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage"><span class="chatboxmessagefrom">'+item.d+':&nbsp;&nbsp;</span><span class="chatboxmessagecontent">'+item.m+'</span></div>');
 					$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage recived" ><!-- <span class="chatboxmessagefrom">'+item.d+':&nbsp;&nbsp;</span> --><span class="chatboxmessagecontent">'+item.m+'</span></div>');
 					SaveDataToLocalStorage(item.f);
+					openChat(item.f);
 				}
 
 				$("#chatbox_"+chatboxtitle+" .chatboxcontent").scrollTop($("#chatbox_"+chatboxtitle+" .chatboxcontent")[0].scrollHeight);
