@@ -565,6 +565,7 @@ function OpenLastChats(){
 	var chats=JSON.parse(localStorage.getItem("openedChats"));
 	for(i=0;i<chats.length;i++){
 		chatWith(chats[i],GetUserFullName(chats[i]));
+		toggleChatBoxGrowth(chats[i]);
 	}
 }
 
