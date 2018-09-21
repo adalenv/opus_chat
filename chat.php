@@ -5,7 +5,7 @@ header('Access-Control-Allow-Origin: *');
 global $dbh;
 $dbh = mysql_connect(DBPATH,DBUSER,DBPASS);
 mysql_selectdb(DBNAME,$dbh);
-update_lastact();
+update_lastact($_GET['me']);
 
 if ($_GET['action'] == "chatheartbeat") { chatHeartbeat(); } 
 if ($_GET['action'] == "sendchat") { sendChat(); } 
@@ -226,7 +226,7 @@ function sanitize($text) {
 
 function openChat() {
 	
-	$sql = "select * from chat where (chat.to = '".mysql_real_escape_string($_GET['me'])."' AND chat.from= '".mysql_real_escape_string($_GET['from'])."'  ) OR (chat.to = '".mysql_real_escape_string($_GET['from'])."' AND chat.from= '".mysql_real_escape_string($_GET['me'])."'  ) AND recd = 1  order by id ASC limit 100 ";
+	$sql = "select * from chat where (chat.to = '".mysql_real_escape_string($_GET['me'])."' AND chat.from= '".mysql_real_escape_string($_GET['from'])."'  ) OR (chat.to = '".mysql_real_escape_string($_GET['from'])."' AND chat.from= '".mysql_real_escape_string($_GET['me'])."'  ) AND recd = 1  limit 100 ";
 	$query = mysql_query($sql);
 	$items = '';
 

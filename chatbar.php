@@ -4,7 +4,7 @@ require_once 'common.php';
 header('Access-Control-Allow-Origin: *');  
 
 mysql_connection();
-update_lastact();
+update_lastact($_GET['me']);
 
 if(!(isset($_GET['act'])) OR !(preg_match('/^(update_chat_bar|chat_friends_list)$/', $_GET['act']))) exit;
 

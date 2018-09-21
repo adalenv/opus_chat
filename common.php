@@ -8,8 +8,6 @@ require_once 'config.inc.php';
 //require_once 'integration.php';
 //require_once 'integrated_functions.php';
 
-
-
 function getcontacts($userid,$role) {
 	$userid = mysql_real_escape_string(stripslashes($userid));
 	switch ($role) {
@@ -54,8 +52,8 @@ function mysql_connection() {
 	mysql_query("SET NAMES utf8;");
 }
 
-function update_lastact() {
-	$userid = mysql_real_escape_string(stripslashes($_GET['me']));
+function update_lastact($userid) {
+	$userid = mysql_real_escape_string(stripslashes($userid));
 	$time = time();
 	$qry = mysql_query("SELECT 1 FROM chat_lastactivity WHERE user='$userid' ORDER BY id DESC LIMIT 1");
 	if(mysql_num_rows($qry)) {
