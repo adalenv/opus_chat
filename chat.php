@@ -310,7 +310,7 @@ EOD;
 	}
 }
 
-	$sql = "update chat set recd = 1 where chat.to = '".mysql_real_escape_string($_GET['me'])."' and recd = 0";
+	$sql = "update chat set recd = 1 where chat.to = '".mysql_real_escape_string($_GET['me'])."' AND chat.from= '".mysql_real_escape_string($_GET['from'])."' and recd = 0";
 	$query = mysql_query($sql);
 
 	if ($items != '') {
