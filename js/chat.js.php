@@ -496,15 +496,16 @@ function openChat(from){
 				if (item.s == 1) {
 					item.f = username;
 				}
-
+				var ts=new Date(item.t).toLocaleString('sq-AL');
+				ts=ts.split(':')[0]+':'+ts.split(':')[1];
 				
 				if (item.s == 2) {
 					$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage"><span class="chatboxinfo">'+item.m+'</span></div>');
 				} else {
 					if(item.f!=from){
-						$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage sent"><!-- <span style="float:right !important" class="chatboxmessagefrom">:&nbsp;&nbsp;'+item.d+'</span> --><span  class="chatboxmessagecontent">'+item.m+'</span><!-- <div class="timestamp">sent</div> --></div>');
+						$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage sent"><!-- <span style="float:right !important" class="chatboxmessagefrom">:&nbsp;&nbsp;'+item.d+'</span> --><span  class="chatboxmessagecontent">'+item.m+'</span><div class="timestamp">'+ts+'</div></div>');
 					} else {
-						$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage recived" ><!-- <span class="chatboxmessagefrom">'+item.d+':&nbsp;&nbsp;</span> --><span class="chatboxmessagecontent">'+item.m+'</span><!-- <div class="timestamp">recived</div> --></div>');
+						$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage recived" ><!-- <span class="chatboxmessagefrom">'+item.d+':&nbsp;&nbsp;</span> --><span class="chatboxmessagecontent">'+item.m+'</span><div class="timestamp">'+ts+'</div></div>');
 					}
 					
 				}

@@ -188,10 +188,10 @@
     border-radius: 20px 20px 0 20px;
 }
 .timestamp {
-    position: absolute;
+	font-size: 10px;
+    color: #555 !important;
+/*    position: absolute;
     bottom: -15px;
-    font-size: 10px;
-    color: #555;
     right: 30px;
-    color: rgba(255, 255, 255, .7);
+    color: rgba(255, 255, 255, .7);*/
 }
