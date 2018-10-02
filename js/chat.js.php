@@ -135,7 +135,7 @@ function createChatBox(chatboxtitle,minimizeChatBox) {
 
 	$("#chatbox_"+chatboxtitle).click(function() {
 		if ($('#chatbox_'+chatboxtitle+' .chatboxcontent').css('display') != 'none') {
-			$("#chatbox_"+chatboxtitle+" .chatboxtextarea").focus();
+			//$("#chatbox_"+chatboxtitle+" .chatboxtextarea").focus();
 		}
 	});
 
