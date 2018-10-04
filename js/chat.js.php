@@ -512,9 +512,9 @@ function openChat(from){
 					$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage"><span class="chatboxinfo">'+item.m+'</span></div>');
 				} else {
 					if(item.f!=from){
-						$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage sent"><!-- <span style="float:right !important" class="chatboxmessagefrom">:&nbsp;&nbsp;'+item.d+'</span> --><span  class="chatboxmessagecontent">'+item.m+'</span><div class="timestamp">'+ta.format(ts)+'</div></div>');
+						$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage sent"><!-- <span style="float:right !important" class="chatboxmessagefrom">:&nbsp;&nbsp;'+item.d+'</span> --><span  class="chatboxmessagecontent">'+item.m+'</span><div class="timestamp" title="'+ts+'">'+ta.format(ts)+'</div></div>');
 					} else {
-						$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage recived" ><!-- <span class="chatboxmessagefrom">'+item.d+':&nbsp;&nbsp;</span> --><span class="chatboxmessagecontent">'+item.m+'</span><div class="timestamp">'+ta.format(ts)+'</div></div>');
+						$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage recived" ><!-- <span class="chatboxmessagefrom">'+item.d+':&nbsp;&nbsp;</span> --><span class="chatboxmessagecontent">'+item.m+'</span><div class="timestamp" title="'+ts+'">'+ta.format(ts)+'</div></div>');
 					}
 					
 				}
