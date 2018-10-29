@@ -314,7 +314,7 @@ function checkChatBoxInputKey(event,chatboxtextarea,chatboxtitle) {
 		$(chatboxtextarea).focus();
 		$(chatboxtextarea).css('height','20px');
 		if (message != '') {
-			$.post("<?php base(); ?>chat.php?action=sendchat&me=<?=$_GET['me']; ?>", {to: chatboxtitle, message: message} , function(data){
+			$.post("<?php base(); ?>chat.php?action=sendchat&me=<?=$_GET['me']; ?>", {to: chatboxtitle, message: message.replace(/[^a-zA-Z0-9 ,]/g,'')} , function(data){
 				message = message.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\"/g,"&quot;");
 				//$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage"><span style="float: right !important;" class="chatboxmessagecontent">'+message+'</span></div><br/>');
 				$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage sent"><span  class="chatboxmessagecontent">'+message+'</span></div>');
