@@ -32,7 +32,7 @@ function getName(){
 
 function chatHeartbeat() {
 	
-	$sql = "select * from chat where (chat.to = '".mysql_real_escape_string($_GET['me'])."' AND recd = 0)  order by id ASC limit 50";
+	$sql = "select * from chat where (chat.to = '".mysql_real_escape_string($_GET['me'])."' AND recd = 0)  order by id ASC ";
 	$query = mysql_query($sql);
 	$items = '';
 
@@ -226,7 +226,7 @@ function sanitize($text) {
 
 function openChat() {
 	
-	$sql = "select * from chat where (chat.to = '".mysql_real_escape_string($_GET['me'])."' AND chat.from= '".mysql_real_escape_string($_GET['from'])."'  ) OR (chat.to = '".mysql_real_escape_string($_GET['from'])."' AND chat.from= '".mysql_real_escape_string($_GET['me'])."'  ) limit 100 ";
+	$sql = "select * from chat where (chat.to = '".mysql_real_escape_string($_GET['me'])."' AND chat.from= '".mysql_real_escape_string($_GET['from'])."'  ) OR (chat.to = '".mysql_real_escape_string($_GET['from'])."' AND chat.from= '".mysql_real_escape_string($_GET['me'])."'  ) ";
 	$query = mysql_query($sql);
 	$items = '';
 
