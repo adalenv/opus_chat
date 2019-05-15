@@ -32,7 +32,7 @@ function getName(){
 
 function chatHeartbeat() {
 	
-	$sql = "select * from chat where (chat.to = '".mysql_real_escape_string($_GET['me'])."' AND recd = 0)  AND sent >= DATE_ADD(CURDATE(), INTERVAL -7 DAY)  order by id ASC ";
+	$sql = "select * from chat where (chat.to = '".mysql_real_escape_string($_GET['me'])."' AND recd = 0)  AND sent >= DATE(NOW()) - INTERVAL 7 DAY  order by id ASC ";
 	$query = mysql_query($sql);
 	$items = '';
 
@@ -228,7 +228,7 @@ function openChat() {
 	
 	//$sql = "select * from ( select * from chat where (chat.to = '".mysql_real_escape_string($_GET['me'])."' AND chat.from= '".mysql_real_escape_string($_GET['from'])."'  ) OR (chat.to = '".mysql_real_escape_string($_GET['from'])."' AND chat.from= '".mysql_real_escape_string($_GET['me'])."'  ) limit 50 ) tmp order by tmp.id asc ";
 
-	$sql = "select * from chat where (chat.to = '".mysql_real_escape_string($_GET['me'])."' AND chat.from= '".mysql_real_escape_string($_GET['from'])."'  ) OR (chat.to = '".mysql_real_escape_string($_GET['from'])."' AND chat.from= '".mysql_real_escape_string($_GET['me'])."'  ) AND sent >= DATE_ADD(CURDATE(), INTERVAL -7 DAY)";
+	$sql = "select * from chat where (chat.to = '".mysql_real_escape_string($_GET['me'])."' AND chat.from= '".mysql_real_escape_string($_GET['from'])."'  ) OR (chat.to = '".mysql_real_escape_string($_GET['from'])."' AND chat.from= '".mysql_real_escape_string($_GET['me'])."'  ) AND sent >= DATE(NOW()) - INTERVAL 7 DAY )";
 	$query = mysql_query($sql);
 	$items = '';
 
