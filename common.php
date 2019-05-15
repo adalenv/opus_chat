@@ -23,6 +23,9 @@ function getcontacts($userid,$role) {
 		case "admin":
 			$qry = mysql_query("SELECT user_id from users where active='yes' and user_id!='".$userid."' and (role='backoffice' or role='supervisor') ");
 			break;
+		case "floor_manager":
+			$qry = mysql_query("SELECT user_id from users where active='yes' and user_id!='".$userid."' and (role='backoffice' or role='supervisor' or role='admin') ");
+			break;
 	}
 	$users = array();
 	if(mysql_num_rows($qry)) {
