@@ -12,14 +12,14 @@ function getcontacts($userid,$role) {
 	$userid = mysql_real_escape_string(stripslashes($userid));
 	switch ($role) {
 		case "backoffice":
-			$qry = mysql_query("SELECT user_id from users where active='yes' and user_id!='".$userid."' and (role='supervisor' or role='operator' or role='admin' or role='backoffice')  order by role desc");
+			$qry = mysql_query("SELECT user_id from users where active='yes' and user_id!='".$userid."' and (role='supervisor'  or role='admin' or role='backoffice')  order by role desc");
 			break;
 		case "supervisor":
 			$qry = mysql_query("SELECT user_id from users where active='yes' and user_id!='".$userid."' and (role='backoffice' or role='admin' ) ");
 			break;
-		case "operator":
-			$qry = mysql_query("SELECT user_id from users where active='yes' and user_id!='".$userid."' and role='backoffice' ");
-			break;
+		// case "operator":
+		// 	$qry = mysql_query("SELECT user_id from users where active='yes' and user_id!='".$userid."' and role='backoffice' ");
+		// 	break;
 		case "admin":
 			$qry = mysql_query("SELECT user_id from users where active='yes' and user_id!='".$userid."' and (role='backoffice' or role='supervisor') ");
 			break;
